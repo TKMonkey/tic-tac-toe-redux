@@ -18,8 +18,7 @@ const initialGameState = {
 export const initialState: TicTacToeViewModel = {
   gameState: initialGameState,
   nextPlayer: Player.X,
-  winner: undefined,
-  gameOver: false,
+  status: `Next player is: ${Player.X}`,
 };
 
 interface PlayMovementActionPayload {
@@ -44,10 +43,18 @@ export const ticTacToeSlice = createSlice<
       action: PayloadAction<PlayMovementActionPayload>
     ) => {
       const game = new Game(action.payload.game);
-      state.winner = game.winner;
+
+      const { winner, isFinished, nextMovement } = game;
+
+      const status = winner
+        ? `The winner is: ${winner}`
+        : isFinished
+        ? "No one won :("
+        : `Next player is: ${nextMovement}`;
+
+      state.status = status;
       state.gameState = game.state;
-      state.gameOver = game.isFinished;
-      state.nextPlayer = game.nextMovement;
+      state.nextPlayer = nextMovement;
     },
   },
 });
