@@ -1,4 +1,4 @@
-import { Game, Movement, Player, ValidPosition } from "../../../domain";
+import { Game, Movement, Player } from "../../../domain";
 
 describe("Game", () => {
   it("Should initialize game with all state values undefined", () => {
@@ -9,34 +9,35 @@ describe("Game", () => {
     const currentState = game.state;
 
     // Assert
-    const initialValue = new Map([
-      [0, undefined],
-      [1, undefined],
-      [2, undefined],
-      [3, undefined],
-      [4, undefined],
-      [5, undefined],
-      [6, undefined],
-      [7, undefined],
-      [8, undefined],
-    ]);
+    const initialValue = {
+      0: undefined,
+      1: undefined,
+      2: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: undefined,
+      7: undefined,
+      8: undefined,
+    };
 
     expect(currentState).toStrictEqual(initialValue);
   });
 
   it("Should initialize game with received initialState", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, undefined],
-      [1, undefined],
-      [2, undefined],
-      [3, Player.X],
-      [4, undefined],
-      [5, undefined],
-      [6, Player.O],
-      [7, undefined],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: undefined,
+      1: undefined,
+      2: undefined,
+      3: Player.X,
+      4: undefined,
+      5: undefined,
+      6: Player.O,
+      7: undefined,
+      8: undefined,
+    };
+
     const game = new Game(initialState);
 
     // Act
@@ -78,34 +79,34 @@ describe("Game", () => {
     const currentState = game.state;
 
     // Assert
-    const expectedState = new Map([
-      [0, undefined],
-      [1, undefined],
-      [2, undefined],
-      [3, undefined],
-      [4, undefined],
-      [5, undefined],
-      [6, Player.X],
-      [7, undefined],
-      [8, undefined],
-    ]);
+    const expectedState = {
+      0: undefined,
+      1: undefined,
+      2: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: Player.X,
+      7: undefined,
+      8: undefined,
+    };
 
     expect(currentState).toStrictEqual(expectedState);
   });
 
   it("Should ignore movement data if field is already filled by same player", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, undefined],
-      [1, undefined],
-      [2, undefined],
-      [3, undefined],
-      [4, undefined],
-      [5, undefined],
-      [6, Player.X],
-      [7, undefined],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: undefined,
+      1: undefined,
+      2: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: Player.X,
+      7: undefined,
+      8: undefined,
+    };
     const game = new Game(initialState);
     const movement = new Movement(6, Player.O);
 
@@ -119,17 +120,17 @@ describe("Game", () => {
 
   it("Should ignore movement data if field is already filled by different player", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, undefined],
-      [1, undefined],
-      [2, undefined],
-      [3, undefined],
-      [4, undefined],
-      [5, undefined],
-      [6, Player.O],
-      [7, undefined],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: undefined,
+      1: undefined,
+      2: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: Player.O,
+      7: undefined,
+      8: undefined,
+    };
     const game = new Game(initialState);
     const movement = new Movement(6, Player.X);
 
@@ -143,17 +144,18 @@ describe("Game", () => {
 
   it("Should ignore movement data if game is already finished", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, undefined],
-      [1, undefined],
-      [2, undefined],
-      [3, Player.X],
-      [4, Player.X],
-      [5, Player.X],
-      [6, Player.O],
-      [7, Player.O],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: undefined,
+      1: undefined,
+      2: undefined,
+      3: Player.X,
+      4: Player.X,
+      5: Player.X,
+      6: Player.O,
+      7: Player.O,
+      8: undefined,
+    };
+
     const game = new Game(initialState);
     const movement = new Movement(0, Player.O);
 
@@ -167,17 +169,18 @@ describe("Game", () => {
 
   it("Should ignore movement data if is not Player.O turn", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, undefined],
-      [1, undefined],
-      [2, undefined],
-      [3, Player.X],
-      [4, Player.O],
-      [5, undefined],
-      [6, undefined],
-      [7, undefined],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: undefined,
+      1: undefined,
+      2: undefined,
+      3: Player.X,
+      4: Player.O,
+      5: undefined,
+      6: undefined,
+      7: undefined,
+      8: undefined,
+    };
+
     const game = new Game(initialState);
     const movement = new Movement(0, Player.O);
 
@@ -191,17 +194,17 @@ describe("Game", () => {
 
   it("Should set winner after winning movement by Player.O", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, Player.X],
-      [1, undefined],
-      [2, undefined],
-      [3, Player.X],
-      [4, Player.X],
-      [5, undefined],
-      [6, Player.O],
-      [7, Player.O],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: Player.X,
+      1: undefined,
+      2: undefined,
+      3: Player.X,
+      4: Player.X,
+      5: undefined,
+      6: Player.O,
+      7: Player.O,
+      8: undefined,
+    };
     const game = new Game(initialState);
     const movement = new Movement(8, Player.O);
 
@@ -215,17 +218,17 @@ describe("Game", () => {
 
   it("Should set winner after winning movement by Player.X", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, Player.X],
-      [1, Player.X],
-      [2, undefined],
-      [3, undefined],
-      [4, undefined],
-      [5, undefined],
-      [6, Player.O],
-      [7, Player.O],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: Player.X,
+      1: Player.X,
+      2: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: Player.O,
+      7: Player.O,
+      8: undefined,
+    };
     const game = new Game(initialState);
     const movement = new Movement(2, Player.X);
 
@@ -239,17 +242,18 @@ describe("Game", () => {
 
   it("Should set isFinished after winning movement by Player.O", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, Player.X],
-      [1, undefined],
-      [2, undefined],
-      [3, Player.X],
-      [4, Player.X],
-      [5, undefined],
-      [6, Player.O],
-      [7, Player.O],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: Player.X,
+      1: undefined,
+      2: undefined,
+      3: Player.X,
+      4: Player.X,
+      5: undefined,
+      6: Player.O,
+      7: Player.O,
+      8: undefined,
+    };
+
     const game = new Game(initialState);
     const movement = new Movement(8, Player.O);
 
@@ -263,17 +267,43 @@ describe("Game", () => {
 
   it("Should set isFinished after winning movement by Player.X", () => {
     // Arrange
-    const initialState = new Map<ValidPosition, Player | undefined>([
-      [0, Player.X],
-      [1, Player.X],
-      [2, undefined],
-      [3, undefined],
-      [4, undefined],
-      [5, undefined],
-      [6, Player.O],
-      [7, Player.O],
-      [8, undefined],
-    ]);
+    const initialState = {
+      0: Player.X,
+      1: Player.X,
+      2: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: Player.O,
+      7: Player.O,
+      8: undefined,
+    };
+
+    const game = new Game(initialState);
+    const movement = new Movement(2, Player.X);
+
+    // Act
+    game.playMovement(movement);
+    const isFinished = game.isFinished;
+
+    // Assert
+    expect(isFinished).toBeTruthy();
+  });
+
+  it("Should set isFinished after all fields are filled", () => {
+    // Arrange
+    const initialState = {
+      0: Player.X,
+      1: Player.X,
+      2: Player.O,
+      3: Player.O,
+      4: Player.O,
+      5: Player.X,
+      6: Player.X,
+      7: Player.O,
+      8: Player.X,
+    };
+
     const game = new Game(initialState);
     const movement = new Movement(2, Player.X);
 
