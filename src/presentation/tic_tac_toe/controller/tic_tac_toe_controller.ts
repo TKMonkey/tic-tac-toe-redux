@@ -1,10 +1,16 @@
-import { Game, Movement } from "../../../domain";
-import { CommandUseCase, PlayMovementParam } from "../../../domain/use_cases";
+import {
+  Game,
+  Movement,
+  CommandUseCase,
+  PlayMovementParam,
+} from "../../../domain";
+import { ITicTacToePresenter } from "../presenter";
 import { ITicTacToeController } from "./i_tic_tac_toe_controller";
 
-export class TicTacToeControllerReact implements ITicTacToeController {
+export class TicTacToeController implements ITicTacToeController {
   constructor(
     private game: Game,
+    private presenter: ITicTacToePresenter,
     private readonly playMovementUseCase: CommandUseCase<PlayMovementParam>
   ) {}
 
@@ -14,5 +20,6 @@ export class TicTacToeControllerReact implements ITicTacToeController {
       movement,
     };
     this.playMovementUseCase.execute(param);
+    this.presenter.changeGameState(this.game.state);
   }
 }
