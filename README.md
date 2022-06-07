@@ -1,3 +1,10 @@
+# Description
+
+This project was created following a Clean-like Architecture.
+Use case oriented and described by this diagram:
+
+[![Architecture Diagram](./architecture_diagram.png)]
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
@@ -5,6 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+Tic Tac Toc React Redux Architecture.drawio.png
 
 ### `npm start`
 
