@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Game, PlayMovement } from "../../domain";
+import { Game, GetGameWithPreviousState, PlayMovement } from "../../domain";
 import { TicTacToeController, ITicTacToePresenter } from "../../presentation";
 
 export const useITicTacToeControllerImplementation = (
@@ -7,9 +7,15 @@ export const useITicTacToeControllerImplementation = (
 ) => {
   const game = new Game();
   const playMovementUseCase = new PlayMovement();
+  const getGameWithPreviousState = new GetGameWithPreviousState();
 
   const controllerRef = useRef(
-    new TicTacToeController(game, presenter, playMovementUseCase)
+    new TicTacToeController(
+      game,
+      presenter,
+      playMovementUseCase,
+      getGameWithPreviousState
+    )
   );
 
   return controllerRef.current;
