@@ -1,3 +1,6 @@
 import { BaseUseCase } from "./base_use_case";
 
-export interface CommandUseCase<I> extends BaseUseCase<I, void> {}
+type CommandReturnType = void | Promise<void>;
+
+export interface CommandUseCase<I, R extends CommandReturnType = void>
+  extends BaseUseCase<I, R> {}
