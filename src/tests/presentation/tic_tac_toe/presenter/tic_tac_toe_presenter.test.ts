@@ -20,6 +20,12 @@ describe("TicTacToePresenterRedux", () => {
       8: undefined,
     };
 
+    const history = [
+      { ...finalGameState, 5: undefined, 6: undefined, 7: undefined },
+      { ...finalGameState, 6: undefined, 7: undefined },
+      { ...finalGameState, 7: undefined },
+    ];
+
     const dispatch = jest.fn();
     const store = {
       dispatch,
@@ -29,11 +35,14 @@ describe("TicTacToePresenterRedux", () => {
     );
 
     // Act
-    presenter.changeGameState(finalGameState);
+    presenter.changeGameState(finalGameState, history);
 
     // Assert
     expect(dispatch).toHaveBeenCalledWith(
-      gameStateChanged({ game: { ...finalGameState } })
+      gameStateChanged({
+        gameState: { ...finalGameState },
+        history: [...history],
+      })
     );
   });
 });
