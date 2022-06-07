@@ -1,4 +1,4 @@
-import { Game, GameState, Movement, Player } from "../../../../domain";
+import { Game, GameState, Movement, Player, NoParam } from "../../../../domain";
 import {
   CommandUseCase,
   GetGameWithPreviousStateParam,
@@ -38,6 +38,14 @@ class MockJumpToGameState
   }
 }
 
+class MockGetInitialGame implements QueryUseCase<NoParam, Promise<Game>> {
+  constructor(private gameToReturn: Game) {}
+
+  async execute(input: NoParam): Promise<Game> {
+    return this.gameToReturn;
+  }
+}
+
 class TTTP implements ITicTacToePresenter {
   constructor(
     private receivedInput?: GameState,
@@ -66,10 +74,11 @@ describe("TicTacToeController", () => {
       const a = new MockPlayMovement();
       const b = new MockJumpToGameState();
       const game = new Game();
+      const getInitialGame = new MockGetInitialGame(game);
       const presenter = new TTTP();
       const ticTacToeController = new TicTacToeController(
-        game,
         presenter,
+        getInitialGame,
         a,
         b
       );
@@ -87,10 +96,11 @@ describe("TicTacToeController", () => {
       const playMovement = new MockPlayMovement();
       const jumpToGameState = new MockJumpToGameState();
       const game = new Game();
+      const getInitialGame = new MockGetInitialGame(game);
       const presenter = new TTTP();
       const ticTacToeController = new TicTacToeController(
-        game,
         presenter,
+        getInitialGame,
         playMovement,
         jumpToGameState
       );
@@ -113,10 +123,11 @@ describe("TicTacToeController", () => {
       const a = new MockPlayMovement();
       const b = new MockJumpToGameState();
       const game = new Game();
+      const getInitialGame = new MockGetInitialGame(game);
       const presenter = new TTTP();
       const ticTacToeController = new TicTacToeController(
-        game,
         presenter,
+        getInitialGame,
         a,
         b
       );
@@ -178,10 +189,11 @@ describe("TicTacToeController", () => {
       const a = new MockPlayMovement();
       const b = new MockJumpToGameState(newGame);
       const game = new Game();
+      const getInitialGame = new MockGetInitialGame(game);
       const presenter = new TTTP();
       const ticTacToeController = new TicTacToeController(
-        game,
         presenter,
+        getInitialGame,
         a,
         b
       );
