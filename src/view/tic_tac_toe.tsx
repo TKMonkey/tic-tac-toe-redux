@@ -8,8 +8,20 @@ import {
 
 export function TicTacToe() {
   const presenter = useITicTacToePresenterImplementation();
-  const { gameState, nextPlayer, status } = useTicTacToeViewModelRedux();
+  const { gameState, nextPlayer, status, history } =
+    useTicTacToeViewModelRedux();
   const controller = useITicTacToeControllerImplementation(presenter);
+
+  const moves = history.map((step, move) => {
+    const desc = move ? `Go to move #${move}` : "Go to Start";
+    return (
+      <li key={move}>
+        <button onClick={() => controller.jumpToGameState(history[move])}>
+          {desc}
+        </button>
+      </li>
+    );
+  });
 
   return (
     <div className="game">
@@ -25,7 +37,7 @@ export function TicTacToe() {
       </div>
       <div className="game-info">
         <div>{status}</div>
-        {/* <ol>{moves}</ol> */}
+        <ol>{moves}</ol>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Game } from "../../entities/game";
+import { Game } from "../../entities";
 import { Movement } from "../../value_objects";
 import { CommandUseCase } from "../command_use_case";
 
