@@ -314,6 +314,75 @@ describe("Game", () => {
     // Assert
     expect(isFinished).toBeTruthy();
   });
+
+  it("Should set previous state", () => {
+    // Arrange
+    const previousState = {
+      0: Player.X,
+      1: Player.X,
+      2: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: Player.O,
+      7: undefined,
+      8: undefined,
+    };
+
+    const game = new Game();
+    const movement1 = new Movement(1, Player.X);
+    const movement2 = new Movement(6, Player.O);
+    const movement3 = new Movement(0, Player.X);
+    const movement4 = new Movement(7, Player.O);
+
+    // Act
+    game.playMovement(movement1);
+    game.playMovement(movement2);
+    game.playMovement(movement3);
+    game.playMovement(movement4);
+
+    game.moveToPreviousGameState(previousState);
+
+    // Assert
+    expect({ history: game.history, currentState: game.state }).toStrictEqual({
+      currentState: { ...previousState },
+      history: [
+        {
+          0: undefined,
+          1: undefined,
+          2: undefined,
+          3: undefined,
+          4: undefined,
+          5: undefined,
+          6: undefined,
+          7: undefined,
+          8: undefined,
+        },
+        {
+          0: undefined,
+          1: Player.X,
+          2: undefined,
+          3: undefined,
+          4: undefined,
+          5: undefined,
+          6: undefined,
+          7: undefined,
+          8: undefined,
+        },
+        {
+          0: undefined,
+          1: Player.X,
+          2: undefined,
+          3: undefined,
+          4: undefined,
+          5: undefined,
+          6: Player.O,
+          7: undefined,
+          8: undefined,
+        },
+      ],
+    });
+  });
 });
 
 export {};

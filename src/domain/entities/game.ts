@@ -17,7 +17,10 @@ const initialGameState: GameState = {
 };
 
 export class Game {
-  constructor(private currentState: GameState = initialGameState) {}
+  constructor(
+    private currentState: GameState = initialGameState,
+    private _history: Array<GameState> = []
+  ) {}
 
   public get isFinished(): boolean {
     return (
@@ -30,7 +33,10 @@ export class Game {
   }
 
   public get state(): GameState {
-    return { ...this.currentState }; //new Map(Array.from(this.currentState.entries()));
+    return { ...this.currentState };
+  }
+  public get history(): Array<GameState> {
+    return [...this._history];
   }
 
   public get nextMovement(): Player {
@@ -49,7 +55,28 @@ export class Game {
 
     squares[movement.position] = movement.player;
 
+    this._history = this.getHistory(squares);
     this.currentState = squares;
+  }
+
+  public moveToPreviousGameState(gameState: GameState) {
+    this._history = this.getHistory(gameState);
+    this.currentState = { ...gameState };
+  }
+
+  private getHistory(newGameState: GameState): Array<GameState> {
+    const serializedGameState = JSON.stringify(newGameState);
+    const currentStatePosition = this._history.findIndex((v, i, obj) => {
+      return JSON.stringify(v) === serializedGameState;
+    });
+    let newHistory = [...this._history];
+    if (currentStatePosition === -1) {
+      newHistory.push({ ...this.currentState });
+    } else {
+      newHistory = newHistory.slice(0, currentStatePosition);
+    }
+
+    return newHistory;
   }
 
   private get movementsCount(): number {
