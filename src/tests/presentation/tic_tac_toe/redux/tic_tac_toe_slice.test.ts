@@ -18,8 +18,14 @@ describe("TicTacToeReducer", () => {
       8: undefined,
     };
 
+    const initialHistory = [
+      { ...initialGameState, 6: undefined, 7: undefined },
+      { ...initialGameState, 7: undefined },
+    ];
+
     const initialState: TicTacToeViewModel = {
       gameState: initialGameState,
+      history: [...initialHistory],
       nextPlayer: Player.X,
       status: "",
     };
@@ -41,7 +47,8 @@ describe("TicTacToeReducer", () => {
     const newState: TicTacToeViewModel = reducer(
       initialState,
       gameStateChanged({
-        game: finalGameState,
+        gameState: finalGameState,
+        history: [...initialHistory, { ...initialGameState }],
       })
     );
 
@@ -49,6 +56,7 @@ describe("TicTacToeReducer", () => {
 
     expect(newState).toStrictEqual({
       gameState: finalGameState,
+      history: [...initialHistory, { ...initialGameState }],
       nextPlayer: Player.O,
       status: `Next player is: ${Player.O}`,
     });
@@ -69,8 +77,15 @@ describe("TicTacToeReducer", () => {
       8: undefined,
     };
 
+    const initialHistory = [
+      { ...initialGameState, 5: undefined, 6: undefined, 7: undefined },
+      { ...initialGameState, 6: undefined, 7: undefined },
+      { ...initialGameState, 7: undefined },
+    ];
+
     const initialState: TicTacToeViewModel = {
       gameState: initialGameState,
+      history: [],
       nextPlayer: Player.X,
       status: "",
     };
@@ -92,7 +107,8 @@ describe("TicTacToeReducer", () => {
     const newState: TicTacToeViewModel = reducer(
       initialState,
       gameStateChanged({
-        game: finalGameState,
+        gameState: finalGameState,
+        history: [...initialHistory, { ...initialGameState }],
       })
     );
 
@@ -100,6 +116,7 @@ describe("TicTacToeReducer", () => {
 
     expect(newState).toStrictEqual({
       gameState: finalGameState,
+      history: [...initialHistory, { ...initialGameState }],
       nextPlayer: Player.X,
       status: `Next player is: ${Player.X}`,
     });
@@ -120,8 +137,27 @@ describe("TicTacToeReducer", () => {
       8: undefined,
     };
 
+    const initialHistory = [
+      {
+        ...initialGameState,
+        4: undefined,
+        5: undefined,
+        6: undefined,
+        7: undefined,
+      },
+      {
+        ...initialGameState,
+        4: undefined,
+        6: undefined,
+        7: undefined,
+      },
+      { ...initialGameState, 4: undefined, 7: undefined },
+      { ...initialGameState, 7: undefined },
+    ];
+
     const initialState: TicTacToeViewModel = {
       gameState: initialGameState,
+      history: [...initialHistory],
       nextPlayer: Player.X,
       status: "",
     };
@@ -143,7 +179,8 @@ describe("TicTacToeReducer", () => {
     const newState: TicTacToeViewModel = reducer(
       initialState,
       gameStateChanged({
-        game: finalGameState,
+        gameState: finalGameState,
+        history: [...initialHistory, { ...initialGameState }],
       })
     );
 
@@ -151,6 +188,7 @@ describe("TicTacToeReducer", () => {
 
     expect(newState).toStrictEqual({
       gameState: finalGameState,
+      history: [...initialHistory, { ...initialGameState }],
       nextPlayer: Player.O,
       status: `The winner is: ${Player.X}`,
     });
@@ -171,8 +209,29 @@ describe("TicTacToeReducer", () => {
       8: undefined,
     };
 
+    const initialHistory = [
+      {
+        ...initialGameState,
+        2: undefined,
+        4: undefined,
+        5: undefined,
+        6: undefined,
+        7: undefined,
+      },
+      {
+        ...initialGameState,
+        2: undefined,
+        4: undefined,
+        6: undefined,
+        7: undefined,
+      },
+      { ...initialGameState, 2: undefined, 4: undefined, 7: undefined },
+      { ...initialGameState, 2: undefined },
+    ];
+
     const initialState: TicTacToeViewModel = {
       gameState: initialGameState,
+      history: [...initialHistory],
       nextPlayer: Player.X,
       status: "",
     };
@@ -194,7 +253,8 @@ describe("TicTacToeReducer", () => {
     const newState: TicTacToeViewModel = reducer(
       initialState,
       gameStateChanged({
-        game: finalGameState,
+        gameState: finalGameState,
+        history: [...initialHistory, { ...initialGameState }],
       })
     );
 
@@ -202,6 +262,7 @@ describe("TicTacToeReducer", () => {
 
     expect(newState).toStrictEqual({
       gameState: finalGameState,
+      history: [...initialHistory, { ...initialGameState }],
       nextPlayer: Player.X,
       status: `The winner is: ${Player.O}`,
     });
@@ -222,8 +283,72 @@ describe("TicTacToeReducer", () => {
       8: Player.X,
     };
 
+    const initialHistory = [
+      {
+        ...initialGameState,
+        1: undefined,
+        2: undefined,
+        3: undefined,
+        4: undefined,
+        5: undefined,
+        6: undefined,
+        7: undefined,
+        8: undefined,
+      },
+      {
+        ...initialGameState,
+        2: undefined,
+        3: undefined,
+        4: undefined,
+        5: undefined,
+        6: undefined,
+        7: undefined,
+        8: undefined,
+      },
+      {
+        ...initialGameState,
+        3: undefined,
+        4: undefined,
+        5: undefined,
+        6: undefined,
+        7: undefined,
+        8: undefined,
+      },
+      {
+        ...initialGameState,
+        3: undefined,
+        4: undefined,
+        6: undefined,
+        7: undefined,
+        8: undefined,
+      },
+      {
+        ...initialGameState,
+        4: undefined,
+        6: undefined,
+        7: undefined,
+        8: undefined,
+      },
+      {
+        ...initialGameState,
+        4: undefined,
+        7: undefined,
+        8: undefined,
+      },
+      {
+        ...initialGameState,
+        7: undefined,
+        8: undefined,
+      },
+      {
+        ...initialGameState,
+        7: undefined,
+      },
+    ];
+
     const initialState: TicTacToeViewModel = {
       gameState: initialGameState,
+      history: [...initialHistory],
       nextPlayer: Player.X,
       status: "",
     };
@@ -245,7 +370,8 @@ describe("TicTacToeReducer", () => {
     const newState: TicTacToeViewModel = reducer(
       initialState,
       gameStateChanged({
-        game: finalGameState,
+        gameState: finalGameState,
+        history: [...initialHistory, { ...initialGameState }],
       })
     );
 
@@ -253,6 +379,7 @@ describe("TicTacToeReducer", () => {
 
     expect(newState).toStrictEqual({
       gameState: finalGameState,
+      history: [...initialHistory, { ...initialGameState }],
       nextPlayer: Player.O,
       status: `No one won :(`,
     });

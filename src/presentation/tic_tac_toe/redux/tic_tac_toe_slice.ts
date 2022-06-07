@@ -17,12 +17,14 @@ const initialGameState = {
 
 export const initialState: TicTacToeViewModel = {
   gameState: initialGameState,
+  history: [],
   nextPlayer: Player.X,
   status: `Next player is: ${Player.X}`,
 };
 
 interface PlayMovementActionPayload {
-  game: GameState;
+  gameState: GameState;
+  history: Array<GameState>;
 }
 
 export const ticTacToeSlice = createSlice<
@@ -42,22 +44,35 @@ export const ticTacToeSlice = createSlice<
       state,
       action: PayloadAction<PlayMovementActionPayload>
     ) => {
-      const game = new Game(action.payload.game);
+      const { gameState, history: actionHistory } = action.payload;
+      const game = new Game(gameState, actionHistory);
 
-      const { winner, isFinished, nextMovement } = game;
+      const { winner, isFinished, nextMovement, history } = game;
 
-      const status = winner
-        ? `The winner is: ${winner}`
-        : isFinished
-        ? "No one won :("
-        : `Next player is: ${nextMovement}`;
+      const status = getStatus({ winner, nextMovement, isFinished });
 
       state.status = status;
+      state.history = history;
       state.gameState = game.state;
       state.nextPlayer = nextMovement;
     },
   },
 });
+
+interface GetStatusParam {
+  winner: Player | undefined;
+  nextMovement: Player;
+  isFinished: boolean;
+}
+
+function getStatus(data: GetStatusParam): string {
+  const { winner, isFinished, nextMovement } = data;
+  return winner
+    ? `The winner is: ${winner}`
+    : isFinished
+    ? "No one won :("
+    : `Next player is: ${nextMovement}`;
+}
 
 export const selectTicTacToe = (state: TicTacToeRootState) => state.ticTacToe;
 

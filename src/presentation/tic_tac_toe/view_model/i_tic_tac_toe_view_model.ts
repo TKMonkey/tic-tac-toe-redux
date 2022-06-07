@@ -4,4 +4,5 @@ export interface TicTacToeViewModel {
   nextPlayer: Player;
   status: string;
   gameState: GameState;
+  history: Array<GameState>;
 }
